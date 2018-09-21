@@ -34,6 +34,12 @@ public class GameController : UtilComponent {
 
     [SerializeField] private int firstIdx;
 
+    [SerializeField] private MazePlayerController playerController;
+
+    [SerializeField] private GameObject objMap1;
+    [SerializeField] private GameObject objMap2;
+
+
     //[SerializeField] private CountDownComponent cdComponent;
 
     //[SerializeField] private Transform trStart;
@@ -75,8 +81,11 @@ public class GameController : UtilComponent {
 
         //SetActive(this.objCountDown, false);
         //SetActive(this.objPlay, false);
-
+        this.context.Init(this.points, this.firstIdx);
+        this.playerController.Init(this.context);
         //resultModalPresenter = ResourceLoader.Instance.Create<ResultModalPresenter>("Prefabs/ResultModal", trResult, false);
+
+        StartCoroutine(this.DisplayMap());
 	}
 
     private void CallBackStartCut(string objName){
@@ -89,6 +98,29 @@ public class GameController : UtilComponent {
     private void CallbackCut(string objName){
         //if (this.currentStatus != STATUS_ENUM.PLAY) return;
         //this.answerController.Answer(objName);
+    }
+
+
+    private IEnumerator DisplayMap()
+    {
+        //Debug.Log("CountDown");
+
+        yield return new WaitForSeconds(6);
+
+        SetActive(this.objMap1, false);
+
+        yield return new WaitForSeconds(10);
+
+        SetActive(this.objMap2, true);
+
+        yield return new WaitForSeconds(4);
+
+        SetActive(this.objMap2, true);
+
+        //this.cdComponent.Init(3.0f, this.FinishCountDown, false);
+        //SetActive(this.trStart, false);
+        //SetActive(this.objCountDown, true);
+        //SetActive(this.objPlay, false);
     }
 
     private IEnumerator SetCountDown(){

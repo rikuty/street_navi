@@ -10,7 +10,7 @@ public class Context {
 
     private int currentDirectIdx = 0;
 
-    private int[] currentDirectAddendArray = new int[]{5, 1, -5, -1};
+    private int[] currentDirectAddendArray = new int[]{-5, 1, 5, -1};
 
 
 
@@ -26,7 +26,11 @@ public class Context {
         if(nextIdx < 0 || points.Length-1 < nextIdx){
             nextIdx = this.currentIdx;
         }
+        if(this.points[nextIdx].y > 0){
+            nextIdx = this.currentIdx;
+        }
         this.currentIdx = nextIdx;
+        Debug.Log(this.currentIdx);
         return this.points[currentIdx];
                    
     }
@@ -37,9 +41,8 @@ public class Context {
     /// </summary>
     /// <returns>The turn point.</returns>
     /// <param name="direct">-1が反時計,1が時計まわり</param>
-    public Vector3 GetTurnPoint(int direct){
-        this.currentDirectIdx = (this.currentDirectIdx + direct) % this.currentDirectAddendArray.Length ;
-        return new Vector3(0f, (float)direct * 90f, 0f);
+    public void SetTurnPoint(int direct){
+        this.currentDirectIdx = (this.currentDirectAddendArray.Length + this.currentDirectIdx + direct) % this.currentDirectAddendArray.Length ;
     }
 
 }
